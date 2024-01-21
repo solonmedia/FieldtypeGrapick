@@ -13,7 +13,7 @@
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Grapick',
-			'version' => '0.0.1',
+			'version' => '1.0.0',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'summary' => 'Field that incorporates the Grapick javascript gradient designer and stores an array of 32-bit rgba colors, gradient positions and optionally gradient styles and a plaintext style rule for CSS.',
