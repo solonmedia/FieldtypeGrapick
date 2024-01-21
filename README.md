@@ -16,8 +16,6 @@ This module makes use of the Spectrum colorpicker library.
 
 Repeater and RepeaterMatrix items are supported.
 
-There is a gremlin in RepeaterPageArray iteration that causes warnings. I've created an issue for it. It does not impact performance.
-
 # CssGradient Object
 
 The FieldtypeGrapick field value is a CssGradient object.

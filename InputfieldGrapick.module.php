@@ -24,7 +24,7 @@ class InputfieldGrapick extends Inputfield {
 		return array(
 			'title' => "Grapick",
 			'summary' => 'Field that implements Grapick javascript gradient designer.',
-			'version' => '1.0.1',
+			'version' => '1.0.2',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'icon' => 'paint-brush',

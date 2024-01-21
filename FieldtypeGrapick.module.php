@@ -13,7 +13,7 @@
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Grapick',
-			'version' => '1.0.1',
+			'version' => '1.0.2',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'summary' => 'Field that incorporates the Grapick javascript gradient designer and stores an array of 32-bit rgba colors, gradient positions and optionally gradient styles and a plaintext style rule for CSS.',
@@ -51,6 +51,7 @@
 				case 'InputfieldGrapick' :
 					$ctrl = $fc->name;
 					$js_array[$ctrl]['loaded'] = false;
+					break;
 				case 'InputfieldRepeater' :
 				case 'InputfieldRepeaterMatrix' :
 						foreach($fc->value as $enum => $it) {
@@ -62,6 +63,7 @@
 								}
 							}
 						}
+					break;
 			}
 		}		
 		wire()->config->jsConfig('grapicks', $js_array);
