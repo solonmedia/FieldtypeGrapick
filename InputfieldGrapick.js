@@ -85,46 +85,60 @@ function build_rule(ind) {
 	switch (ipt_style.value) {
 		case 'radial-circle' :
 			css_fn = 'radial-gradient';
-			shape = 'circle at';
+			shape = 'circle ';
 			origin = ipt_origin.value.replace(/_/g, ' ');
 			break;
 		case 'radial-ellipse' :
 			css_fn = 'radial-gradient';
-			shape = 'ellipse 125% 125% at';
+			shape = 'ellipse ';
+			shape += (ipt_size.value == '') ? 'farthest-corner' : ipt_size.value + '% ' + ipt_size.value + '%'; 
 			origin = ipt_origin.value.replace(/_/g, ' ');
 			break;
 		case 'repeating-linear' :
 			css_fn = 'repeating-linear-gradient';
-			angle = ipt_angle.value.replace(/\-/g,'');
+			angle = ipt_angle.value + 'deg ';
 			repeat = true;
 			break;
 		case 'repeating-radial-circle' :
 			css_fn = 'repeating-radial-gradient';
-			shape = 'circle  at';
+			shape = 'circle ';
 			origin = ipt_origin.value.replace(/_/g, ' ');
 			repeat = true;
 			break;
 		case 'repeating-radial-ellipse' :
 			css_fn = 'repeating-radial-gradient';
-			shape = 'ellipse 125% 125% at';
+			shape = 'ellipse ';
+			shape += (ipt_size.value == '') ? 'farthest-corner' : ipt_size.value + '% ' + ipt_size.value + '%'; 
+			origin = ipt_origin.value.replace(/_/g, ' ');
+			repeat = true;
+			break;
+		case 'conical' :
+			css_fn = 'conic-gradient';
+			angle = 'from ' + ipt_angle.value + 'deg ';
+			origin = ipt_origin.value.replace(/_/g, ' ');
+			break;
+		case 'repeating-conical' :
+			css_fn = 'repeating-conic-gradient';
+			angle = 'from ' + ipt_angle.value + 'deg ';
 			origin = ipt_origin.value.replace(/_/g, ' ');
 			repeat = true;
 			break;
 		case 'linear' :
 		default : 
 			css_fn = 'linear-gradient';
-			angle = ipt_angle.value.replace(/\-/g,'');
+			angle = ipt_angle.value + 'deg ';
 			break;
 	}
 
 	let rule_out = css_fn+'(';
 
 	rule_out += (shape !== '') ? shape + ' ' : '';
+	rule_out += (angle) ? angle : '';
+	rule_out += (origin) ?  ' at ' + origin + ' ' : '';
 
-	rule_out += (origin) ?  origin + ', ' : '';
-	rule_out += (angle) ? angle + ', ' : '';
+	rule_out.trimEnd();
 
-	let rule_tmp = '';
+	let rule_tmp = ', ';
 
 	let loadStops = stopTxt[ind].value.split('|');
 
@@ -134,7 +148,11 @@ function build_rule(ind) {
 		if (repeat) {
 			gr_size = (ipt_size.value!=0) ? +ipt_size.value : 100 ;
 			px_size = (+stopParts[1]/100) * gr_size;
-			rule_tmp += clr.full + ' ' + Math.round(px_size) +'px, ';
+			if (ipt_style.value.includes('conical')) {
+				rule_tmp += clr.full + ' ' + Math.round(px_size) +'%, ';
+			} else {
+				rule_tmp += clr.full + ' ' + Math.round(px_size) +'px, ';
+			}
 		} else {
 			rule_tmp += clr.full + ' ' + stopParts[1] +'%, ';
 		}
@@ -215,6 +233,12 @@ var createGrapick = function(key) {
 		$el.spectrum({
 			color: handler.getColor(),
 			showAlpha: true,
+            showPalette: true,
+			showInitial: true,
+            showSelectionPalette: true,
+			hideAfterPaletteSelect:true,
+            palette: [],
+            localStorageKey: "spectrum.theme_colors",
 			clickoutFiresChange: true,
 			change(color) {
 			handler.setColor(color.toRgbString());

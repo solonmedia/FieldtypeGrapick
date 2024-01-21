@@ -24,7 +24,7 @@ class InputfieldGrapick extends Inputfield {
 		return array(
 			'title' => "Grapick",
 			'summary' => 'Field that implements Grapick javascript gradient designer.',
-			'version' => '0.0.1',
+			'version' => '1.0.0',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'icon' => 'paint-brush',
@@ -182,9 +182,11 @@ class InputfieldGrapick extends Inputfield {
 
 		$style_radios = [
 			'linear' => 'Linear',
+			'conical' => 'Conical',
 			'radial-circle' => 'Radial Circle',
 			'radial-ellipse' => 'Radial Ellipse',
 			'repeating-linear' => 'Repeating Linear',
+			'repeating-conical' => 'Repeating Conical',
 			'repeating-radial-circle' => 'Repeating Circle',
 			'repeating-radial-ellipse' => 'Repeating Ellipse',
 		];
@@ -215,33 +217,6 @@ class InputfieldGrapick extends Inputfield {
 			'-100%_200%' => 'Far Bottom Left',
 			'50%_200%' => 'Far Bottom Center',
 			'200%_200%' => 'Far Bottom Right',
-		];
-
-		$angle_options = [
-			'0-deg' => '0°',
-			'15-deg' => '15°',
-			'30-deg' => '30°',
-			'45-deg' => '45°',
-			'60-deg' => '60°',
-			'75-deg' => '75°',
-			'90-deg' => '90°',
-			'105-deg' => '105°',
-			'120-deg' => '120°',
-			'135-deg' => '135°',
-			'150-deg' => '150°',
-			'165-deg' => '165°',
-			'180-deg' => '180°',
-			'195-deg' => '195°',
-			'210-deg' => '210°',
-			'225-deg' => '225°',
-			'240-deg' => '240°',
-			'255-deg' => '255°',
-			'270-deg' => '270°',
-			'285-deg' => '285°',
-			'300-deg' => '300°',
-			'315-deg' => '315°',
-			'330-deg' => '330°',
-			'345-deg' => '345°',
 		];
 
 		$inputfields = new InputfieldFieldset();
@@ -275,28 +250,35 @@ class InputfieldGrapick extends Inputfield {
 
 		$f = $this->modules->get('InputfieldSelect');
 		$f->id = $name.'-origin';
-		$f->label = 'Origin (Ellipse)';
+		$f->label = 'Origin';
 		$f->name = $name.'_origin';
 		$f->options = $origin_options;
 		$f->columnWidth = 25;
 		$f->value = $origin;
 		$inputfields->add($f);
 
-		$f = $this->modules->get('InputfieldSelect');
+		$f = $this->modules->get('InputfieldInteger');
 		$f->id = $name.'-angle';
-		$f->label = 'Angle (Linear)';
+		$f->label = 'Angle';
 		$f->name = $name.'_angle';
-		$f->options = $angle_options;
+		$f->size = 4;
+		$f->zeroNotEmpty = 1;
+		$f->min = -360;
+		$f->max = 360;
+		$f->inputType = 'number';
 		$f->columnWidth = 25;
 		$f->value = $angle;
 		$inputfields->add($f);
 
-		$f = $this->modules->get('InputfieldText');
+		$f = $this->modules->get('InputfieldInteger');
 		$f->id = $name.'-size';
-		$f->label = 'Size (Repeating)';
+		$f->label = 'Size';
 		$f->name = $name.'_size';
 		$f->size = 3;
-		$f->notes = 'In px';
+		$f->zeroNotEmpty = 1;
+		$f->inputType = 'number';
+		$f->min = 1;
+		$f->notes = '';
 		$f->columnWidth = 25;
 		$f->value = $size;
 		$inputfields->add($f);
@@ -306,6 +288,7 @@ class InputfieldGrapick extends Inputfield {
 		$f->label = 'Stops';
 		$f->name = $name.'_stops';
 		$f->placeholder = 'This is where Grapick will place stops as they are generated in text code.';
+		$f->notes = 'If you alter these values, you must save to see the results.';
 		$f->columnWidth = 100;
 		$f->collapsed = 1;
 		$f->value = $stops;

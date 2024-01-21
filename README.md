@@ -6,7 +6,7 @@ The original javascript library was written by [Artur Arseniev](https://topmate.
 
 Aside from requiring ProcessWire 3, the requirements are:
 
-- PHP >= 7.2 or >= PHP 8.0
+- PHP >= 8.0
 
 [The original javascript project](https://github.com/artf/grapick)
 

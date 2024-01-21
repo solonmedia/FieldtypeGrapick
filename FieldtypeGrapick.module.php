@@ -144,17 +144,6 @@
     	}
 		$gradient = new CssGradient(); //Context for this object isn't important because there is no config.
 
-        //style refers to the dropdown default value
-        //origin refers to the string used to calculate the starting point for the gradient
-        //stops refers to the array of color stops
-
-		$gradient->set('style', 'linear');
-		$gradient->set('origin', '');
-        $gradient->set('angle', '');
-		$gradient->set('stops', 'FFFFFFFF^0|FF000000^100');
-        $gradient->set('rule', '');
-        $gradient->set('size', '');
-
 		return $gradient;
 
 	}
@@ -176,10 +165,10 @@
 		// populate the gradient
 		$gradient->style = $value['style'];
 		$gradient->origin = $value['origin'];
-		$gradient->angle = $value['angle'];
+		$gradient->angle = ($value['angle'] == '') ? 0 : $value['angle'];
 		$gradient->stops = $value['data'];
 		$gradient->rule = $value['rule'];
-		$gradient->size = $value['size'];
+		$gradient->size = ($value['size'] == '') ? 1 : $value['size'];
 		$gradient->setTrackChanges(true); 
 
 		return $gradient; 
@@ -206,7 +195,7 @@
 		$sleepValue = [
 			'data' => $gradient->stops,
 			'style' => $gradient->style, 
-			'angle' => $gradient->angle, 
+			'angle' => wire()->sanitizer->digits($gradient->angle), 
 			'origin' => $gradient->origin, 
 			'size' => $gradient->size,
 			'rule' => $gradient->build_rule(),
