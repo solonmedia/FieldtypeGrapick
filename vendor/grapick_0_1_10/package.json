@@ -1,0 +1,58 @@
+{
+  "name": "grapick",
+  "version": "0.1.13",
+  "description": "Easy configurable gradient picker, with no dependencies",
+  "author": "Artur Arseniev",
+  "main": "dist/grapick.min.js",
+  "license": "MIT",
+  "keywords": [
+    "gradient",
+    "color",
+    "picker"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artf/grapick.git"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "build": "cross-env WEBPACK_ENV=prod && npm run lint && npm run test && npm run v:patch && webpack --display-modules && npm run build:css",
+    "build:css": "node-sass src/styles/main.scss dist/grapick.min.css --output-style compressed",
+    "v:patch": "npm version --no-git-tag-version patch",
+    "start": "cross-env WEBPACK_ENV=dev webpack-dev-server --progress --colors & npm run build:css -- -w",
+    "test": "jest --coverage",
+    "test:dev": "npm test -- --watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "cross-env": "^5.2.1",
+    "eslint": "^4.19.1",
+    "jest": "^21.0.2",
+    "node-sass": "^4.14.1",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.5"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "testRegex": "test/index.js"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": [
+            "> 1%",
+            "ie 11",
+            "safari 8"
+          ],
+          "useBuiltIns": true
+        }
+      ]
+    ]
+  }
+}
