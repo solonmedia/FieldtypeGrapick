@@ -13,7 +13,7 @@
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Grapick',
-			'version' => '1.0.6',
+			'version' => '1.0.7',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'summary' => 'Field that incorporates the Grapick javascript gradient designer and stores an array of 32-bit rgba colors, gradient positions and optionally gradient styles and a plaintext style rule for CSS.',
@@ -106,23 +106,6 @@
 	 *
 	 */
 	public function getBlankValue(Page $page, Field $field) {
-		
-		$gradient->$this->wire('modules')->get('InputfieldGrapick');
-
-		$context = ($page && $page->id) ? $field->getContext($page->template) : $field;
-
-		if(!($page instanceof NullPage)) {
-			if($page->template->pageClass == 'RepeaterMatrixPage') {
-				if($page->getField($field->name)) {
-					$field_in_context = $page->fieldgroup->getFieldContext($field, "matrix$page->repeater_matrix_type");
-					if($field_in_context) {
-						$field = $field_in_context;
-					}
-				}
-				$inputfield->setField($field);
-				$inputfield->setPage($page);
-			}
-		}
 		
 		$gradient = new CssGradient(); //Context for this object isn't important because there is no config.
 
