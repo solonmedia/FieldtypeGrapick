@@ -177,33 +177,17 @@ function build_rule(ind) {
 var upType, unAngle, gp = [];
 const stopTxt = [], swType = [], swAngle = [], swOrigin = [], swSize = [];
 
-const pwConfig = ProcessWire.config.grapicks;
+$(document).ready(function() {
+	$('[id$="_grapick_control"]').each(function() {
+		field_name = this.id.replace('_grapick_control','');
+		createGrapick(field_name);
+	});
+});
 
-console.log('pwConfig',pwConfig);
-
-function pollingRun() {
-	let done = true;
-	for (let key in pwConfig) {
-		if (pwConfig.hasOwnProperty(key)) {
-			if(pwConfig[key]['loaded'] == false) {
-				done = false;
-				let ctrl = document.getElementById(key+'_grapick_control');
-				//console.log(key, pwConfig[key], ctrl);
-				if(ctrl) {
-					createGrapick(key);
-				}
-				//console.log('Grapick field: ' + key);
-				for (let key2 in pwConfig[key]) {
-					//console.log('---->', key2, pwConfig[key][key2]);
-				}
-			}
-		}
-	}
-	if(done) {
-		//console.log('Done.');
-		clearInterval(poll);
-	}
-}
+$(document).on('reloaded', '.InputfieldGrapick', function(event) {
+	field_name = $(event.currentTarget).find('.grapick').attr('id').replace('_grapick_control','');
+	createGrapick(field_name);
+});
 
 var createGrapick = function(key) {
 	gp[key] = new Grapick({
@@ -280,52 +264,9 @@ var createGrapick = function(key) {
 		build_rule(key);
 	})
 	gp[key].emit('change');
-	pwConfig[key]['loaded'] = true;
 };
 
 var destroyGrapick = function(key) {
 	gp[key].destroy();
 	gp[key] = 0;
-}
-
-document.addEventListener('DOMContentLoaded', pollingRun, false);
-
-var poll = setInterval(pollingRun, 1000);
-
-document.addEventListener('DOMContentLoaded', () => {
-
-	//Look for new grapick fields (to account for repeaters)
-
-	// select the target node
-	var target = document.getElementById('ProcessPageEdit');
-
-	// create an observer instance
-	var observer = new MutationObserver(function(mutations) {
-		mutations.forEach(function(mutation) {
-		var nodes = mutation.addedNodes;
-		var node;
-		for(var n = 0; node = nodes[n], n < nodes.length; n++) {
-			test_id = node.id;
-	        if(node.tagName == 'LI' && test_id.includes('repeater_item')) {
-				getGrapickControlNodes();
-			}
-		};
-		});
-	});
-
-	// configuration of the observer:
-	var config = { attributes: false, childList: true, subtree: true, characterData: false };
-
-	// pass in the target node, as well as the observer options
-	observer.observe(target, config);
-		
-}, false);
-
-function getGrapickControlNodes() {
-	const nodeSet = document.querySelectorAll('[id*="_grapick_control"]').forEach(item => {
-		keyName = item.id.substring(0,item.id.indexOf('_grapick_control'));
-		pwConfig[keyName] = {'loaded':true};
-		//console.log('post add',pwConfig);
-		createGrapick(keyName);
-	});
 }

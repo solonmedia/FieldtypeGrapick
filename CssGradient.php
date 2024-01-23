@@ -201,5 +201,4 @@ class CssGradient extends WireData {
 
     }
 
-
 }

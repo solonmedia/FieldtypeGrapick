@@ -37,40 +37,6 @@
 		require_once(dirname(__FILE__) . '/CssGradient.php'); 
 	}
 
-
-	public function init() {
-	    $this->addHookAfter('ProcessPageEdit::buildFormContent', $this, 'setJsConfig');
-	}
-
-	public function setJsConfig($e) {
-		$form = $e->return;
-		$js_array = [];
-		foreach($form->children as $fc) {
-			$f_class = $fc->className;
-			switch($f_class) {
-				case 'InputfieldGrapick' :
-					$ctrl = $fc->name;
-					$js_array[$ctrl]['loaded'] = false;
-					break;
-				case 'InputfieldRepeater' :
-				case 'InputfieldRepeaterMatrix' :
-						foreach($fc->value as $enum => $it) {
-							$fg = $it->template->fieldgroup;
-							foreach($fg as $r_field) {
-								if($r_field->type == 'FieldtypeGrapick') {
-									$ctrl = $r_field->name.'_repeater'.$it->id;
-									$js_array[$ctrl]['loaded'] = false;
-								}
-							}
-						}
-					break;
-			}
-		}		
-		wire()->config->jsConfig('grapicks', $js_array);
-
-		//bd($inputfields);
-	}
-
 	/**
 	 * Return the Inputfield required by this Fieldtype
 	 * 

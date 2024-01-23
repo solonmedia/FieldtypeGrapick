@@ -24,7 +24,7 @@ class InputfieldGrapick extends Inputfield {
 		return array(
 			'title' => "Grapick",
 			'summary' => 'Field that implements Grapick javascript gradient designer.',
-			'version' => '1.0.2',
+			'version' => '1.0.3',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'icon' => 'paint-brush',
@@ -122,13 +122,6 @@ class InputfieldGrapick extends Inputfield {
 		foreach($mod_styles as $ms) {
 			$config->styles->add($ms);
 		}
-
-		$this->config->js('InputfieldGrapick', [
-				'settings' => [
-					'test' => 'item',
-				],
-			],
-		);
 
 		return parent::renderReady($parent, $renderValueMode);
 	}
@@ -318,7 +311,6 @@ class InputfieldGrapick extends Inputfield {
 			'size' => "{$name}_size"
 		);
 
-
         foreach($input_names as $key => $p_name) {
 
             if(!empty($input->$p_name) && isset($input->$p_name) && $gradient->$key != $input->$p_name) {
@@ -331,7 +323,5 @@ class InputfieldGrapick extends Inputfield {
 
 		return $this;
 	}
-
-
 
 }
