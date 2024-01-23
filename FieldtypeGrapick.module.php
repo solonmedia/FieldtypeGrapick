@@ -42,23 +42,27 @@
 	 * 
 	 * @param Page $page
 	 * @param Field $field
-	 * @return InputfieldCssGradient
+	 * @return CssGradient
 	 *
 	 */
 	public function getInputfield(Page $page, Field $field) {
-		/** @var InputfieldCssGradient $inputfield */
+		/** @var InputfieldGrapick $inputfield */
 
 		$inputfield = $this->wire('modules')->get('InputfieldGrapick');
 
-		if($page->template->pageClass == 'RepeaterMatrixPage') {
-			if($page->getField($field->name)) {
-				$field_in_context = $page->fieldgroup->getFieldContext($field, "matrix$page->repeater_matrix_type");
-				if($field_in_context) {
-					$field = $field_in_context;
+		$context = ($page && $page->id) ? $field->getContext($page->template) : $field;
+
+		if(!($page instanceof NullPage)) {
+			if($page->template->pageClass == 'RepeaterMatrixPage') {
+				if($page->getField($field->name)) {
+					$field_in_context = $page->fieldgroup->getFieldContext($field, "matrix$page->repeater_matrix_type");
+					if($field_in_context) {
+						$field = $field_in_context;
+					}
 				}
+				$inputfield->setField($field);
+				$inputfield->setPage($page);
 			}
-		$inputfield->setField($field);
-		$inputfield->setPage($page);
 		}
 
 		return $inputfield;
@@ -105,11 +109,19 @@
 		
 		$context = ($page && $page->id) ? $field->getContext($page->template) : $field;
 
-		if($page->template->pageClass == 'RepeaterMatrixPage') {
-    		if($page->getField($field->name)) {
-    			$context = $page->fieldgroup->getFieldContext($field, "matrix$page->repeater_matrix_type");
+		if(!($page instanceof NullPage)) {
+			if($page->template->pageClass == 'RepeaterMatrixPage') {
+				if($page->getField($field->name)) {
+					$field_in_context = $page->fieldgroup->getFieldContext($field, "matrix$page->repeater_matrix_type");
+					if($field_in_context) {
+						$field = $field_in_context;
+					}
+				}
+				$inputfield->setField($field);
+				$inputfield->setPage($page);
 			}
-    	}
+		}
+		
 		$gradient = new CssGradient(); //Context for this object isn't important because there is no config.
 
 		return $gradient;
