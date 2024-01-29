@@ -195,7 +195,7 @@ class CssGradient extends WireData {
 
             $rgba =  array_map('hexdec', $hex);
 
-            $output = 'rgba('.$rgba[1].', '.$rgba[2].', '.$rgba[3].', '.round((float)($rgba[0]/255),1).')';
+            $output = 'rgba('.$rgba[1].', '.$rgba[2].', '.$rgba[3].', '.round((float)($rgba[0]/255),2).')';
 
             return $output;
 

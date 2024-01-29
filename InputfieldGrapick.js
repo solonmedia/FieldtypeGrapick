@@ -64,7 +64,7 @@ function hex32ToRgb(hex) {
     r: parseInt(result[2], 16),
     g: parseInt(result[3], 16),
     b: parseInt(result[4], 16),
-	full: 'rgba('+parseInt(result[2], 16) +', '+ parseInt(result[3], 16)+', '+ parseInt(result[4], 16)+', '+ Math.round(parseInt(result[1], 16)/255)+')',
+	full: 'rgba('+parseInt(result[2], 16) +', '+ parseInt(result[3], 16)+', '+ parseInt(result[4], 16)+', '+ (parseInt(result[1], 16)/255).toFixed(2)+')',
   } : null;
 }
 
@@ -157,7 +157,7 @@ function build_rule(ind) {
 			rule_tmp += clr.full + ' ' + stopParts[1] +'%, ';
 		}
 	}
-
+	//console.log(rule_tmp);
 	rule_out += rtrim(rule_tmp, ', ');
 
 	rule_out += ")";

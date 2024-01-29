@@ -24,7 +24,7 @@ class InputfieldGrapick extends Inputfield {
 		return array(
 			'title' => "Grapick",
 			'summary' => 'Field that implements Grapick javascript gradient designer.',
-			'version' => '1.0.7',
+			'version' => '1.0.8',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'icon' => 'paint-brush',
@@ -93,7 +93,7 @@ class InputfieldGrapick extends Inputfield {
 	 */
 	public function fieldtype() {
 		/** @var FieldtypeGrapick $fieldtype */
-		$fieldtype = $this->wire()->modules->get('FieldtypeGrapick');
+		$fieldtype = $this->modules->get('FieldtypeGrapick');
 		return $fieldtype;
 	}
 

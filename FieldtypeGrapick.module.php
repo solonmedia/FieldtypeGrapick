@@ -13,7 +13,7 @@
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Grapick',
-			'version' => '1.0.7',
+			'version' => '1.0.8',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'summary' => 'Field that incorporates the Grapick javascript gradient designer and stores an array of 32-bit rgba colors, gradient positions and optionally gradient styles and a plaintext style rule for CSS.',
@@ -48,7 +48,7 @@
 	public function getInputfield(Page $page, Field $field) {
 		/** @var InputfieldGrapick $inputfield */
 
-		$inputfield = $this->wire('modules')->get('InputfieldGrapick');
+		$inputfield = $this->modules->get('InputfieldGrapick');
 
 		$context = ($page && $page->id) ? $field->getContext($page->template) : $field;
 
