@@ -42,7 +42,7 @@ function RGBAToHexA(rgba) {
   let r = (+rgba[0]).toString(16),
       g = (+rgba[1]).toString(16),
       b = (+rgba[2]).toString(16),
-      a = Math.round((+rgba[3] || 1)*255).toString(16);
+      a = Math.round((rgba[3] !== undefined ? +rgba[3] : 1)*255).toString(16);
 
   if (r.length == 1)
     r = "0" + r;

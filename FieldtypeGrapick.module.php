@@ -13,7 +13,7 @@
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'Grapick',
-			'version' => '1.0.8',
+			'version' => '1.0.9',
 			'author' => 'Jacob Gorny',
 			'href' => 'https://github.com/solonmedia/FieldtypeGrapick',
 			'summary' => 'Field that incorporates the Grapick javascript gradient designer and stores an array of 32-bit rgba colors, gradient positions and optionally gradient styles and a plaintext style rule for CSS.',
@@ -165,7 +165,21 @@
 			'size' => $gradient->size,
 			'rule' => $gradient->build_rule(),
 		];
-		return $sleepValue; 
+		return $sleepValue;
+	}
+
+	/**
+	 * Check if value should be deleted (is still the default/blank gradient)
+	 *
+	 * @param Page $page
+	 * @param Field $field
+	 * @param mixed $value
+	 * @return bool
+	 */
+	public function isDeleteValue(Page $page, Field $field, $value) {
+		if(!$value instanceof CssGradient) return true;
+		$blank = new CssGradient();
+		return $value->stops === $blank->stops;
 	}
 
 	public function getDatabaseSchema(Field $field) {
